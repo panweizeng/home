@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# rename this file to proxy.config
+
+# remote host
+HOST=username@remotehost
+# local proxy port
+PORT=8080
+# log path
+LOGPATH=/home/yourname/bin/proxy.log
+# check url 
+CHECKURL=http://baidu.com/

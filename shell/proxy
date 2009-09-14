@@ -1,0 +1,73 @@
+#!/bin/bash
+
+source ~/bin/proxy.config
+
+function __help() {
+	echo 'usage: 
+	proxy [run|show|check|log]
+example: 
+	proxy run   # run proxy
+	proxy show  # show proxy information
+	proxy check # check proxy status
+	proxy log   # show proxy log'
+}
+
+function __show() {
+	OUTPUT=`ps aux|grep "ssh.*qTfnN"|grep -v "grep"`
+	if [[ -n $OUTPUT ]]; then
+		ps aux|grep "ssh.*qTfnN"|grep -v "grep"
+	else 
+		echo 'PROXY_NOT_WORKING';
+	fi
+}
+
+function __start() {
+	PIDS=`ps aux|grep "ssh.*qTfnN"|grep -v "grep"|awk '{print $2}'`
+	if [[ -n $PIDS ]]; then
+		kill $PIDS
+	fi
+	echo 'try to connect remote host...'
+	ssh -qTfnN -D $PORT $HOST 
+	__show
+}
+
+function __check() {
+	CMD="curl $CHECKURL --socks5 "127.0.0.1:$PORT" -s"
+	echo "try to connect proxy 127.0.0.1:$PORT..."
+	RESPONSE=`$CMD`
+	if [[ -n $RESPONSE ]]; then
+		TIME=`date +'%Y-%m-%d %H:%M:%S'`
+		echo $RESPONSE 
+		echo "$TIME | PROXY_IS_WORKING" >> $LOGPATH
+	else 
+		TIME=`date +'%Y-%m-%d %H:%M:%S'`
+		echo 'not working...'
+		echo "$TIME | PROXY_NOT_WORKING" >> $LOGPATH
+	fi
+}
+
+
+if [[ $# -eq 0 ]]; then
+	__help
+else 
+	ACTION=$1
+	case $ACTION in
+		'run') 
+			__start
+			;;
+		'show') 
+			__show
+			;;
+		'check') 
+			__check
+			;;
+		'log') 
+			tail $LOGPATH -n 10
+			;;
+		*)
+			__help
+			;;
+	esac
+fi
+
+
