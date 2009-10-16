@@ -1,0 +1,22 @@
+
+
+1.
+rename conf.sample.py to conf.py
+
+2.
+change API_KEY and SECRET to your own
+
+3.
+
+at the first time, if you don't have TOKEN_KEY and TOKEN_SECRET, exec the getToken.py.
+
+your need to paste a url in your browser, complete the authorization then come back.
+
+copy TOKEN_KEY and TOKEN_SECRET to conf.py
+
+exec the run.py 
+
+
+good luck!
+
+

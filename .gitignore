@@ -1,0 +1,10 @@
+*.[oa]
+*~
+*.pyc
+*.swp
+*.swo
+*.bin
+*.config
+conf.py
+config/
+log/
