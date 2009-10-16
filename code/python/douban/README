@@ -1,19 +1,24 @@
 
 
+
 1.
-rename conf.sample.py to conf.py
+install official python client library for douban api
+http://code.google.com/p/douban-python/
 
 2.
-change API_KEY and SECRET to your own
+rename conf.sample.py to conf.py
 
 3.
+set API_KEY and SECRET to your own
 
+4.
 at the first time, if you don't have TOKEN_KEY and TOKEN_SECRET, exec the getToken.py.
 
 your need to paste a url in your browser, complete the authorization then come back.
 
 copy TOKEN_KEY and TOKEN_SECRET to conf.py
 
+5.
 exec the run.py 
 
 
