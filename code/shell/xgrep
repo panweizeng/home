@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+INCLUDE=""
+
+echo 'Search special filetype(enter to skip)?'
+read -p "[php/js/css, etc] : " FILETYPE
+
+if [ -n $FILETYPE ]; then
+	if [ "$FILETYPE" \> 64 ]; then
+		INCLUDE="--include=*.$FILETYPE"
+	fi
+fi
+
+grep $* --exclude=*.{png,jpg,gif,swp} -I $INCLUDE | grep -v '.svn'
+
+
+

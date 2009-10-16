@@ -1,0 +1,25 @@
+#!/bin/bash
+
+USERNAME=username
+PASSWORD=password
+LOGINURL=http://www.example.com/login
+UPDATEURL=http://www.example.com/update
+LOGFILE=update.log
+# cookie temp file
+COOKIEFILE=cookie_tmp.txt
+
+# login
+# -d your login information 
+# -c save cookie to a temp file
+# -s silence mode
+curl $LOGINURL -d"username=$USERNAME&password=$PASSWORD&autologin=1" -c $COOKIEFILE -s
+
+# update
+# -b use the cookie file
+RESPONSE=`curl $UPDATEURL -s -b $COOKIEFILE |grep $USERNAME`
+TIME=`date +'%Y-%m-%d %H:%M:%S'`
+# write the response to log file
+echo "$TIME | $RESPONSE" >> $LOGFILE
+# delete cookie temp file
+rm $COOKIEFILE
+

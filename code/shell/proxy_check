@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+define('PROXY_LOGPATH', dirname(__FILE__) . '/proxy.log');
+define('PROXY_CONF', '127.0.0.1:8080');
+define('PROXY_CHECK_URL', 'http://baidu.com/');
+
+function check() {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, PROXY_CHECK_URL);
+	curl_setopt($ch, CURLOPT_PROXY, PROXY_CONF);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+
+	$response = curl_exec($ch);
+	$tpl = "%s | %s\n";
+	$time = date('Y-m-d H:i:s');
+	if(curl_errno($ch)){
+		@file_put_contents(PROXY_LOGPATH, sprintf($tpl, $time, 'PROXY_NOT_WORKING ERROR:'.curl_error($ch)), FILE_APPEND);
+	} else {
+		@file_put_contents(PROXY_LOGPATH, sprintf($tpl, $time, 'PROXY_IS_WORKING'), FILE_APPEND);
+	}
+	curl_close($ch);
+	unset($ch);
+}
+
+check();
+
+
