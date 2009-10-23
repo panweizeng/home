@@ -12,7 +12,14 @@ if [ -n $FILETYPE ]; then
 	fi
 fi
 
-grep $* --exclude=*.{png,jpg,gif,swp} -I $INCLUDE | grep -v '.svn'
+# --exclude=GLOB Skip files whose base name matches GLOB (using wildcard matching)
+# --exclude-dir=DIR Exclude directories matching the pattern DIR from recursive searches
+# --include=GLOB Search only files whose base name matches GLOB (using wildcard matching as described under --exclude)
+# -I Process a binary file as if it did not contain matching data
+# --color=(never, always, or auto) make the output beautiful
+
+#grep $* --exclude=*.{png,jpg,gif,swp} -I $INCLUDE | grep -v '.svn'
+grep $* --exclude=*.{png,jpg,gif,swp} --exclude-dir=.{svn,git} -I $INCLUDE --color=auto
 
 
 
