@@ -9,6 +9,10 @@ read -p "[php/js/css, etc] : " FILETYPE
 if [ -n $FILETYPE ]; then
 	if [ "$FILETYPE" \> 64 ]; then
 		INCLUDE="--include=*.$FILETYPE"
+	elif [ "$FILETYPE" == "*" ]; then
+		INCLUDE=""
+	else
+		INCLUDE="--include=*.php"
 	fi
 fi
 

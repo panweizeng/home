@@ -21,13 +21,21 @@ function __show() {
 	fi
 }
 
+# -q      Quiet mode.
+# -T      Disable pseudo-tty allocation.
+# -f      Requests ssh to go to background just before command execution.
+# -n      Redirects stdin from /dev/null (actually, prevents reading from stdin).  This must be used when ssh is run in the background.
+# -N      Do not execute a remote command.  This is useful for just forwarding ports (protocol version 2 only).
+# -g      Allows remote hosts to connect to local forwarded ports.
+# -D port Specifies a local dynamic application-level port forwarding.
+
 function __start() {
 	PIDS=`ps aux|grep "ssh.*qTfnN"|grep -v "grep"|awk '{print $2}'`
 	if [[ -n $PIDS ]]; then
 		kill $PIDS
 	fi
 	echo 'try to connect remote host...'
-	ssh -qTfnN -D $PORT $HOST 
+	ssh -qTfnNg -D $PORT $HOST
 	__show
 }
 
