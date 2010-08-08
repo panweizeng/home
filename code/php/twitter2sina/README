@@ -1,0 +1,10 @@
+
+
+
+1. change $twitterAuth and $sinaAuth
+
+2. get a app key from http://open.t.sina.com.cn/apps. change $source to your app key.
+
+3. add a entry like `*/1 * * * * /usr/bin/php /home/xp/twitter2sina/sync.php` to crontab. 
+
+
