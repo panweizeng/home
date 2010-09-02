@@ -1,10 +1,7 @@
 <?php
-
-/* get your own consumer key and secret from http://twitter.com/apps */
-define('CONSUMER_KEY', 'bfRu65dMZp7eoGAki1sTlA');
-define('CONSUMER_SECRET', '5gFYApjrvOThpDAJ14QVnRMr1ArWtlhhDCuKfu6L0');
-
 require_once('TwitterOAuth.php');
+require_once('config.php');
+
 $requestToken = $requestTokenSecrect = null;
 $to = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 $tok = $to->getRequestToken();

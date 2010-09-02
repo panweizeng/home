@@ -5,6 +5,7 @@
 *.swo
 *.bin
 *.config
+config.php
 conf.py
 config/
 log/

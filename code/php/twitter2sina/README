@@ -1,11 +1,13 @@
 
 
-1. run `php token.php` in command line to get your access token.
+1. rename config.sample.php to config.php.
 
-2. get a app key from http://open.t.sina.com.cn/apps. change $source to your app key.
+2. get your own consumer key and secret from http://twitter.com/apps. run `php token.php` in command line to get your access token.
 
-3. change $twitterAuth and $sinaAuth
+3. get a app key from http://open.t.sina.com.cn/apps. change $source to your app key.
 
-4. add a entry like `*/1 * * * * /usr/bin/php /home/xp/twitter2sina/sync.php` to crontab.
+4. change $sinaAuth.
+
+5. add a entry like `*/1 * * * * /usr/bin/php /home/xp/twitter2sina/sync.php` to crontab.
 
 

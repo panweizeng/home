@@ -1,22 +1,18 @@
 <?php
-# 用户名:密码
-$twitterAuth = 'test:123456';
-$sinaAuth = 'test@sina.com:123456';
-$source = 'your app key';
+require_once('TwitterOAuth.php');
+require_once('config.php');
 
-$url = 'http://'.$twitterAuth.'@twitter.com/statuses/user_timeline.json?';
-$idLog = 'id.log';
-$statusesLog = 'statuses.log';
-
+$to = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 if(file_exists($idLog)){
-	$lastid = file_get_contents($idLog);
-	$url .= 'count=100&since_id='.intval($lastid);
+	$lastid = intval(file_get_contents($idLog));
+	$params = array('count' => 5, 'since_id' => $lastid);
 } else {
     touch($idLog);
-	$url .= 'count=1';
+	$params = array('count' => 1);
 }
- 
-$tweets = json_decode(file_get_contents($url), true);
+
+$ret = $to->OAuthRequest('https://twitter.com/statuses/user_timeline.json', $params, 'GET');
+$tweets = json_decode($ret, true);
 if(empty($tweets) || empty($tweets[0]['id'])) exit;
 file_put_contents($idLog, $tweets[0]['id']);
 while($t = array_pop($tweets)){
