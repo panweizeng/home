@@ -2,6 +2,7 @@
 #coding=utf8
 import urllib
 import sys
+import os
 import re
 import xml.dom.minidom as xml
 
@@ -33,6 +34,8 @@ def main():
     if len(sys.argv) >= 2:
         word = ' '.join(sys.argv[1:])
         getword(word)
+        os.system('say %s' % word);
+
     else:
         print 'usage:dict [word]'
 

@@ -2,6 +2,8 @@
 
 source ~/bin/proxy.config
 
+AUTOSSH_MONITOR_PORT=20000
+
 function __help() {
     echo 'usage: 
     proxy [run|show|check|log]
@@ -13,7 +15,7 @@ example:
 }
 
 function __show() {
-    OUTPUT=`ps aux|grep "ssh.*qTfnN"|grep -v "grep"`
+    OUTPUT=`ps aux|grep "autossh.*$AUTOSSH_MONITOR_PORT"|grep -v "grep"`
     if [[ -n $OUTPUT ]]; then
         echo "$OUTPUT"
     else
@@ -21,6 +23,11 @@ function __show() {
     fi
 }
 
+# options for autossh:
+# -M      specifies the base monitoring port to use.
+# -f      run in background (autossh handles this, and does not pass it to ssh.)
+#
+# options for ssh:
 # -q      Quiet mode.
 # -T      Disable pseudo-tty allocation.
 # -f      Requests ssh to go to background just before command execution.
@@ -30,12 +37,8 @@ function __show() {
 # -D port Specifies a local dynamic application-level port forwarding.
 
 function __start() {
-    PIDS=`ps aux|grep "ssh.*qTfnN"|grep -v "grep"|awk '{print $2}'`
-    if [[ -n $PIDS ]]; then
-        kill $PIDS
-    fi
     echo 'try to connect remote host...'
-    ssh -qTfnNg -D $PORT $HOST
+    autossh -M $AUTOSSH_MONITOR_PORT -f -qTnNg -D $PORT $HOST
     __show
 }
 
